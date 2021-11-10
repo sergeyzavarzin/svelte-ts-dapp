@@ -1,15 +1,29 @@
 <script lang="ts">
 	export let name: string;
+	export let isAnonimous: boolean = false;
 
-	function changeName(e) {
-		console.log(e.target.value);
+	$: userName = isAnonimous ? 'Anonimous' : name;
+
+	function changeName(e: any) {
+		name = e.target.value;
 	}
 </script>
 
 <main>
-	<h1>Hello {name}</h1>
-	<input type="text" on:change={changeName} />
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>
+		Hello {userName}
+		{#if isAnonimous}
+			<span>🥸</span>
+		{:else}
+			<span>🤓</span>
+		{/if}
+	</h1>
+	<input type="text" bind:value={name} on:change={changeName} />
+	<label>
+		<input type=checkbox bind:checked={isAnonimous}>
+		<span>anonimous</span>
+	</label>
+
 </main>
 
 <style>
